@@ -1,0 +1,142 @@
+import {
+    CURRENT_WINDOW,
+    DEFAULT_TAB_GROUP_COLOR,
+    DEFAULT_TAB_GROUP_NAME,
+    NO_GROUP_ID,
+    PERIODICALLY_GROUP_TABS,
+    PERIODICALLY_SAVE_SESSIONS
+} from "./constants.js";
+
+let settings = {};
+
+async function fetchSettions() {
+    settings = await chrome.storage.sync.get({
+        defaultTabGroupName: DEFAULT_TAB_GROUP_NAME,
+        defaultTabGroupColor: DEFAULT_TAB_GROUP_COLOR,
+        groupOnLaunch: PERIODICALLY_GROUP_TABS,
+        periodicallySaveSessions: PERIODICALLY_SAVE_SESSIONS
+    });
+}
+
+export async function saveSessions(req) {
+    await fetchSettions();
+    if (req.save) {
+        //     todo: save the session silently
+        // console.log(settings.periodicallySaveSessions ? 'saving' : 'not saving, check options');
+    }
+}
+
+export async function groupUngroupedTabs() {
+    let tabs = await chrome.tabs.query({groupId: NO_GROUP_ID, windowId: CURRENT_WINDOW, pinned: false});
+    const tabIds = tabs.map(({id}) => id);
+    if (tabIds.length) {
+        const doesTheTabGroupAlreadyExist = (await chrome.tabGroups.query({
+            title: settings.defaultTabGroupName, windowId: CURRENT_WINDOW
+        }))[0];
+        const group = doesTheTabGroupAlreadyExist ? await chrome.tabs.group({
+            groupId: doesTheTabGroupAlreadyExist.id, tabIds: tabIds
+        }) : await chrome.tabs.group({tabIds});
+        const tabGroupOptions = doesTheTabGroupAlreadyExist ? {} : {
+            title: settings.defaultTabGroupName, color: settings.defaultTabGroupColor
+        }
+        await chrome.tabGroups.update(group, tabGroupOptions);
+    }
+}
+
+export async function expandCollapseTabGroups(collapse = true) {
+    const openTabGroups = await chrome.tabGroups.query({collapsed: !collapse});
+    const tabGroupIds = openTabGroups.map(tg => tg.id);
+    tabGroupIds.forEach(t => {
+        chrome.tabGroups.update(t, {collapsed: collapse});
+    })
+}
+
+export async function saveSession() {
+    const windows = await chrome.windows.getAll({populate: true});
+    const {name, version} = chrome.runtime.getManifest();
+    let formattedWindows = {"windows": [], "extension": {name, version}};
+    for (const w of windows) {
+        let tabGroupsInWindow = Object.groupBy(await chrome.tabGroups.query({windowId: w.id}), ({id}) => id);
+        let formattedTabs = [];
+        for (const tab of w["tabs"]) {
+            if (tab.groupId === NO_GROUP_ID) {
+                formattedTabs.push({[`tab_${tab.id}`]: tab});
+                continue;
+            }
+            const tabGroupDetails = tabGroupsInWindow[tab.groupId][0];
+            const groupPropertyName = `group_${tab.groupId}`;
+            let tabGroup = formattedTabs.find(ft => Object.keys(ft).includes(groupPropertyName));
+            if (!tabGroup) {
+                formattedTabs.push({[`${groupPropertyName}`]: {...tabGroupDetails, tabs: [tab]}})
+                continue;
+            }
+            tabGroup[`${groupPropertyName}`].tabs.push(tab);
+        }
+        formattedWindows["windows"].push({[`${w.id}`]: formattedTabs});
+    }
+    const date = new Date();
+    const filename = `chrome_tab_groups_${date.getFullYear()}${date.getMonth()}${date.getDate()}.json`;
+    const blob = new Blob([JSON.stringify(formattedWindows)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    return chrome.downloads.download({
+        filename, conflictAction: "overwrite", url, saveAs: true
+    });
+}
+
+export async function loadSession() {
+    try {
+        const [handle] = await showOpenFilePicker({multiple: false});
+        const file = await handle.getFile();
+        let contents = await file.text();
+        // check if it's a base64 encoded file saved in the background
+        if (!contents.includes('{')) {
+            contents = decodeURIComponent(contents);
+        }
+        const sessionToBeCreated = JSON.parse(contents);
+        if (!sessionToBeCreated.windows) {
+            throw new Error("Invalid session file, please choose a valid one");
+        }
+        const newWindows = (sessionToBeCreated["windows"]);
+        // await createWindowWithTabs(newWindows[0]);
+        for (const newWindow of newWindows) {
+            await createWindowWithTabs(newWindow);
+        }
+    } catch (err) {
+        throw Error(err);
+    }
+}
+
+async function createWindowWithTabs(newWindowToBeCreated = {}) {
+    let [windowEntries] = Object.values(newWindowToBeCreated);
+    if (!windowEntries.length) {
+        return;
+    }
+    const newWindow = await chrome.windows.create({
+        focused: true
+    });
+    const tabsToRemoved = newWindow.tabs.map(t => t.id);
+    for (const windowEntry of windowEntries) {
+        const [entryKey] = Object.keys(windowEntry);
+        const entryValue = windowEntry[entryKey];
+        if (entryKey.includes("tab_") || entryValue.groupId === NO_GROUP_ID) {
+            await chrome.tabs.create({pinned: entryValue.pinned, url: entryValue.url, windowId: newWindow.id})
+            continue;
+        }
+        let tabIds = [];
+        for (const t of entryValue.tabs) {
+            const tab = await chrome.tabs.create({url: t.url, windowId: newWindow.id})
+            tabIds.push(tab.id);
+        }
+        const groupId = await chrome.tabs.group({
+            tabIds, createProperties: {
+                windowId: newWindow.id
+            }
+        });
+        await chrome.tabGroups.update(groupId, {
+            title: entryValue.title, color: entryValue.color, collapsed: entryValue.collapsed
+        });
+    }
+    chrome.windows.update(newWindow.id, {state: "maximized"});
+    // Remove the first empty tab that gets created when a new window is created
+    await chrome.tabs.remove(tabsToRemoved);
+}

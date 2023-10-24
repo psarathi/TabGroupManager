@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tab Group Manager Settings</title>
+</head>
+<body>
+<select id="default_tab_color">
+    <option value="grey">grey</option>
+    <option value="red" selected>red</option>
+    <option value="green">green</option>
+    <option value="blue">blue</option>
+    <option value="yellow">yellow</option>
+    <option value="pink">pink</option>
+    <option value="purple">purple</option>
+    <option value="cyan">cyan</option>
+    <option value="orange">orange</option>
+</select>
+
+<label for="opt_group_on_launch">
+    <input type="checkbox" id="opt_group_on_launch" checked/>
+    Periodically group ungrouped tabs
+</label>
+<label for="opt_periodically_save_sessions">
+    <input type="checkbox" id="opt_periodically_save_sessions"/>
+    Periodically save sessions (every 6 hours)
+</label>
+<label for="txt_defaultTabGroupName">
+    <input id="txt_defaultTabGroupName" type="text" placeholder="Tab group name...(Misc is the default)">
+    Tab name for grouping ungrouped tabs
+</label>
+
+<div id="status"></div>
+<button id="save">Save</button>
+
+<script src="scripts/options.js" type="module"></script>
+</body>
+</html>
