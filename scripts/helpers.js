@@ -74,12 +74,11 @@ export async function saveSession() {
         }
         formattedWindows["windows"].push({[`${w.id}`]: formattedTabs});
     }
-    const date = new Date();
-    const filename = `chrome_tab_groups_${date.getFullYear()}${date.getMonth()}${date.getDate()}.json`;
-    const blob = new Blob([JSON.stringify(formattedWindows)], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
     return chrome.downloads.download({
-        filename, conflictAction: "overwrite", url, saveAs: true
+        filename: getSessionFileName(),
+        conflictAction: "overwrite",
+        url: getDataToBeSaved(formattedWindows),
+        saveAs: true
     });
 }
 
@@ -139,4 +138,20 @@ async function createWindowWithTabs(newWindowToBeCreated = {}) {
     chrome.windows.update(newWindow.id, {state: "maximized"});
     // Remove the first empty tab that gets created when a new window is created
     await chrome.tabs.remove(tabsToRemoved);
+}
+
+export function getSessionFileName() {
+    const date = new Date();
+    return `chrome_tab_groups_${date.getFullYear()}${date.getMonth()}${date.getDate()}.json`;
+}
+
+export function getDataToBeSaved(data, isBackground = false) {
+    if (!data) {
+        return;
+    }
+    if (isBackground) {
+        return 'data:application/json;base64,' + btoa(encodeURIComponent(JSON.stringify(data)));
+    }
+    const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+    return URL.createObjectURL(blob);
 }

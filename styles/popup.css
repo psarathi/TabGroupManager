@@ -3,3 +3,10 @@ body {
     background-color: azure;
     border-radius: 5px;
 }
+
+div#lnk_Options {
+    width: 10%;
+    font-size: xx-large;
+    cursor: pointer;
+    color: darkorange;
+}

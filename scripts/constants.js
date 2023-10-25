@@ -5,4 +5,4 @@ export const PERIODICALLY_SAVE_SESSIONS = false;
 export const CURRENT_WINDOW = -2;
 export const NO_GROUP_ID = -1;
 export const TAB_GROUPING_DURATION = 15 * 1000; // 30s or more, the service worker becomes deactivated
-export const SESSION_SAVE_DURATION = 6 * 60 * 60 * 1000; // 6 hours
+export const SESSION_SAVE_DURATION = 24 * 60 * 60 * 1000; // 24 hours

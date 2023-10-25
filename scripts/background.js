@@ -1,11 +1,14 @@
 import {
     CURRENT_WINDOW,
-    DEFAULT_TAB_GROUP_NAME,
     DEFAULT_TAB_GROUP_COLOR,
-    PERIODICALLY_GROUP_TABS,
+    DEFAULT_TAB_GROUP_NAME,
     NO_GROUP_ID,
-    TAB_GROUPING_DURATION, SESSION_SAVE_DURATION, PERIODICALLY_SAVE_SESSIONS
+    PERIODICALLY_GROUP_TABS,
+    PERIODICALLY_SAVE_SESSIONS,
+    SESSION_SAVE_DURATION,
+    TAB_GROUPING_DURATION
 } from "./constants.js";
+import {getDataToBeSaved, getSessionFileName} from "./helpers.js";
 
 
 chrome.runtime.onInstalled.addListener((details) => {
@@ -65,7 +68,7 @@ export async function saveSession() {
     }
     const windows = await chrome.windows.getAll({populate: true});
     const {name, version} = chrome.runtime.getManifest();
-    let formattedWindows = {"windows": [], "extension": {name, version, "background": true}};
+    let formattedWindows = {"windows": [], "extension": {name, version}};
     for (const w of windows) {
         let tabGroupsInWindow = Object.groupBy(await chrome.tabGroups.query({windowId: w.id}), ({id}) => id);
         let formattedTabs = [];
@@ -85,12 +88,9 @@ export async function saveSession() {
         }
         formattedWindows["windows"].push({[`${w.id}`]: formattedTabs});
     }
-    const date = new Date();
-    const filename = `chrome_tab_groups_${date.getFullYear()}${date.getMonth()}${date.getDate()}.json`;
-    const blob = new Blob([JSON.stringify(formattedWindows)], {type: 'application/json'});
     await chrome.downloads.download({
-        url: 'data:application/json;base64,' + btoa(encodeURIComponent(JSON.stringify(formattedWindows))),
-        filename,
+        url: getDataToBeSaved(formattedWindows, true),
+        filename: getSessionFileName(),
         conflictAction: "overwrite"
     });
 }
