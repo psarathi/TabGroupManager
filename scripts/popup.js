@@ -33,7 +33,6 @@ options_link.addEventListener('click', goToOptions);
 //     }
 // });
 btn_collapse.addEventListener('click', async () => {
-    alert('expandCollapseTabGroups');
     await expandCollapseTabGroups();
 });
 btn_expand.addEventListener('click', async () => {
