@@ -32,3 +32,89 @@ div#container button {
 div#container h2 {
     text-align: center;
 }
+
+span.start {
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: collapse_in;
+    display: inline-block;
+    margin: 0 0.1em;
+}
+
+span.end {
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: collapse_out;
+    display: inline-block;
+    margin: 0 0.1em 0.1em;
+}
+
+span.down {
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: point_down;
+    display: inline-block;
+}
+
+span.up {
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: point_up;
+    display: inline-block;
+}
+
+span.gear {
+    animation-duration: 7s;
+    animation-iteration-count: infinite;
+    animation-name: rotate_gear;
+    display: inline-block;
+}
+
+@keyframes collapse_in {
+    from {
+        transform: translateX(10%);
+    }
+
+    to {
+        transform: translateX(80%);
+    }
+}
+
+@keyframes collapse_out {
+    from {
+        transform: translateX(80%);
+    }
+
+    to {
+        transform: translateX(10%);
+    }
+}
+
+@keyframes point_down {
+    from {
+        transform: translateY(10%);
+    }
+
+    to {
+        transform: translateY(30%);
+    }
+}
+
+@keyframes point_up {
+    from {
+        transform: translateY(30%);
+    }
+
+    to {
+        transform: translateY(10%);
+    }
+}
+
+@keyframes rotate_gear {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
