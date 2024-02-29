@@ -89,7 +89,14 @@ export async function saveSession() {
 
 export async function loadSession() {
     try {
-        const [handle] = await showOpenFilePicker({multiple: false});
+        const [handle] = await showOpenFilePicker({
+            multiple: false, types: [{
+                description: 'Saved JSON sessions (.json)',
+                accept: {
+                    'application/json': ['.json'],
+                }
+            }]
+        });
         const file = await handle.getFile();
         let contents = await file.text();
         // check if it's a base64 encoded file saved in the background
