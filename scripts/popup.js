@@ -17,10 +17,12 @@ document.body.addEventListener('keyup', async (e) => {
         case 'c':
         case 'C':
             await expandCollapseTabGroups();
+            window.close();
             break;
         case 'e':
         case 'E':
             await expandCollapseTabGroups(false);
+            window.close();
             break;
         case 's':
         case 'S':
