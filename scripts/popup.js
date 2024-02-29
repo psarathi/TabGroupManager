@@ -12,7 +12,26 @@ const label_save = document.getElementById('lbl_sessionSaveStatus');
 
 // chrome.action.setBadgeText({text: 'ON'});
 // chrome.action.setBadgeBackgroundColor({color: 'green'});
-
+document.body.addEventListener('keyup', async (e) => {
+    switch (e.key) {
+        case 'c':
+        case 'C':
+            await expandCollapseTabGroups();
+            break;
+        case 'e':
+        case 'E':
+            await expandCollapseTabGroups(false);
+            break;
+        case 's':
+        case 'S':
+            saveClickHandler();
+            break;
+        case 'l':
+        case 'L':
+            loadClickHandler();
+            break;
+    }
+});
 options_link.addEventListener('click', goToOptions);
 // chrome.runtime.onMessage.addListener(saveSessions);
 
@@ -42,20 +61,25 @@ btn_expand.addEventListener('click', async () => {
 //     // openRulesConfigPage();
 //     const results = await searchTabs('*://developer.chrome.com/*');
 //     console.log(results.length ? `${results.length} matching tabs found: ${JSON.stringify(results)}` : 'no tabs found');
-// });
-btn_saveSession.addEventListener('click', async () => {
+function saveClickHandler() {
     saveSession().then(() => label_save.innerHTML = 'Session saved successfully')
         .catch((e) => label_save.innerHTML = `Session couldn\'t be saved:${e}`)
         .finally(() => setTimeout(() => {
             label_save.innerHTML = '';
         }, 750));
-});
-btn_loadSession.addEventListener('click', async () => {
+}
+
+// });
+btn_saveSession.addEventListener('click', saveClickHandler);
+
+function loadClickHandler() {
     loadSession().catch((e) => label_save.innerHTML = `Session couldn\'t be loaded:${e}`)
         .finally(() => setTimeout(() => {
             label_save.innerHTML = '';
         }, 75000));
-});
+}
+
+btn_loadSession.addEventListener('click', loadClickHandler);
 
 function goToOptions() {
     goToOptionsPage();
