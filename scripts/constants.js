@@ -20,3 +20,6 @@ export const SEARCH_PLACE = Object.freeze({
     Page_Title: Symbol('begins_with'),
     Page_Body: Symbol('ends_with')
 });
+export const TAB_RULES = {
+    'StatSig': '*://*.statsig.com/*'
+};
