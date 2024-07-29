@@ -20,9 +20,32 @@ export const SEARCH_PLACE = Object.freeze({
     Page_Title: Symbol('begins_with'),
     Page_Body: Symbol('ends_with')
 });
+export const TAB_RULE_TYPE = Object.freeze({
+    Collate: Symbol('collate'),
+    Remove: Symbol('remove')
+});
 export const TAB_RULES = {
-    'StatSig': {
-        url: '*://*.statsig.com/*',
-        color: 'blue'
-    }
+    [TAB_RULE_TYPE.Collate]: [
+        {
+            name: 'StatSig',
+            url: '*://*.statsig.com/*',
+            color: 'blue'
+        },
+        {
+            name: 'GitHub',
+            url: ['*://*.github.ancestry.com/*', '*://*.github.com/*'],
+            color: 'grey'
+        },
+        {
+            name: 'Target',
+            url: '*://*.adobe.com/*',
+            color: 'green'
+        },
+        {
+            name: 'New Relic',
+            url: '*://*.newrelic.com/*',
+            color: 'blue'
+        }
+    ],
+    [TAB_RULE_TYPE.Remove]: [] // list of URL rules for tabs that need to be removed
 };

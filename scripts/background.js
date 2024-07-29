@@ -8,6 +8,7 @@ import {
     PRESERVE_SESSION_HISTORY,
     SESSION_SAVE_DURATION,
     TAB_GROUPING_DURATION,
+    TAB_RULE_TYPE,
     TAB_RULES
 } from './constants.js';
 import {getDataToBeSaved, getSessionFileName} from './helpers.js';
@@ -20,7 +21,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 // chrome.tabGroups.onUpdated.addListener(handleTabGroupUpdate);
 function initiateBackgroundTasks() {
     setInterval(async () => {
-        await groupUngroupedTabs();
+        await groupUngroupedTabsAndApplyTabRules();
         // chrome.runtime.sendMessage({"save": true});
     }, TAB_GROUPING_DURATION);
     setInterval(async () => {
@@ -43,7 +44,32 @@ async function groupTabs(tabIds, groupName, groupColor) {
     }
 }
 
-async function groupUngroupedTabs() {
+async function collateTabs(settings) {
+    for (const rule of TAB_RULES[TAB_RULE_TYPE.Collate]) {
+        let tabsThatMatchRule = await chrome.tabs.query({
+            url: rule['url'],
+            windowId: CURRENT_WINDOW,
+            pinned: false
+        });
+        const tabIds = tabsThatMatchRule.map(({id}) => id);
+        await groupTabs(tabIds, rule['name'], rule['color'] || settings.defaultTabGroupColor);
+    }
+}
+
+async function removeTabs() {
+    if (TAB_RULES[TAB_RULE_TYPE.Remove].length < 1) {
+        return;
+    }
+    let tabsToRemove = await chrome.tabs.query({
+        url: TAB_RULES[TAB_RULE_TYPE.Remove],
+        windowId: CURRENT_WINDOW,
+        pinned: false
+    });
+    const tabIds = tabsToRemove.map(({id}) => id);
+    await chrome.tabs.remove(tabIds);
+}
+
+async function groupUngroupedTabsAndApplyTabRules() {
     let settings = await chrome.storage.sync.get({
         defaultTabGroupName: DEFAULT_TAB_GROUP_NAME,
         defaultTabGroupColor: DEFAULT_TAB_GROUP_COLOR,
@@ -56,14 +82,15 @@ async function groupUngroupedTabs() {
     const tabIds = tabsWithNoGroup.map(({id}) => id);
     await groupTabs(tabIds, settings.defaultTabGroupName, settings.defaultTabGroupColor);
 //     group tabs as per the rules
-    for (const tabRule in TAB_RULES) {
-        let tabsThatMatchRule = await chrome.tabs.query({
-            url: TAB_RULES[tabRule]['url'],
-            windowId: CURRENT_WINDOW,
-            pinned: false
-        });
-        const tabIds = tabsThatMatchRule.map(({id}) => id);
-        await groupTabs(tabIds, tabRule, TAB_RULES[tabRule]['color'] || settings.defaultTabGroupColor);
+    for (const tabRule of Object.getOwnPropertySymbols(TAB_RULES)) {
+        switch (tabRule) {
+            case TAB_RULE_TYPE.Collate:
+                await collateTabs(settings);
+                break;
+            case TAB_RULE_TYPE.Remove:
+                await removeTabs();
+                break;
+        }
     }
 }
 
