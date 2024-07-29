@@ -36,7 +36,7 @@ async function groupTabs(tabIds, groupName, groupColor) {
         const group = doesTheTabAlreadyExist ? await chrome.tabs.group({
             groupId: doesTheTabAlreadyExist.id, tabIds: tabIds
         }) : await chrome.tabs.group({tabIds});
-        const tabGroupOptions = doesTheTabAlreadyExist ? {} : {
+        const tabGroupOptions = doesTheTabAlreadyExist ? {color: groupColor} : {
             title: groupName, color: groupColor
         };
         await chrome.tabGroups.update(group, tabGroupOptions);
@@ -58,12 +58,12 @@ async function groupUngroupedTabs() {
 //     group tabs as per the rules
     for (const tabRule in TAB_RULES) {
         let tabsThatMatchRule = await chrome.tabs.query({
-            url: TAB_RULES[tabRule],
+            url: TAB_RULES[tabRule]['url'],
             windowId: CURRENT_WINDOW,
             pinned: false
         });
         const tabIds = tabsThatMatchRule.map(({id}) => id);
-        await groupTabs(tabIds, tabRule, settings.defaultTabGroupColor);
+        await groupTabs(tabIds, tabRule, TAB_RULES[tabRule]['color'] || settings.defaultTabGroupColor);
     }
 }
 

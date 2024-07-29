@@ -21,5 +21,8 @@ export const SEARCH_PLACE = Object.freeze({
     Page_Body: Symbol('ends_with')
 });
 export const TAB_RULES = {
-    'StatSig': '*://*.statsig.com/*'
+    'StatSig': {
+        url: '*://*.statsig.com/*',
+        color: 'blue'
+    }
 };
