@@ -45,6 +45,11 @@ export const TAB_RULES = {
             name: 'New Relic',
             url: '*://*.newrelic.com/*',
             color: 'blue'
+        },
+        {
+            name: 'Harness',
+            url: '*://*.harness.io/*',
+            color: 'purple'
         }
     ],
     [TAB_RULE_TYPE.Remove]: [] // list of URL rules for tabs that need to be removed
