@@ -182,3 +182,15 @@ export async function searchTabs(searchText, searchPlace = SEARCH_PLACE.Page_Bod
 export function goToOptionsPage() {
     chrome.runtime.openOptionsPage();
 }
+
+export async function relocateTabToBeginningOfTabGroup() {
+    let currentWindowTabs = await chrome.tabs.query({windowId: CURRENT_WINDOW});
+    if (!currentWindowTabs.length) {
+        return;
+    }
+    let activeTab = currentWindowTabs.find(t => t.active);
+    // This works because the tabs are returned in sorted order of index
+    let smallestIndexInTabGroup = currentWindowTabs.filter(t => t.groupId === activeTab.groupId).map(t => t.index)[0];
+    await chrome.tabs.move(activeTab.id, {index: smallestIndexInTabGroup});
+    await chrome.tabs.update(activeTab.id, {active: true});
+}

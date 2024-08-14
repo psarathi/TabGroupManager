@@ -1,9 +1,16 @@
-import {expandCollapseTabGroups, goToOptionsPage, loadSession, saveSession} from './helpers.js';
+import {
+    expandCollapseTabGroups,
+    goToOptionsPage,
+    loadSession,
+    relocateTabToBeginningOfTabGroup,
+    saveSession
+} from './helpers.js';
 
 const btn_collapse = document.getElementById('btn_collapseTabs');
 const btn_expand = document.getElementById('btn_expandAllTabs');
 const btn_saveSession = document.getElementById('btn_saveCurrentSession');
 const btn_loadSession = document.getElementById('btn_loadSession');
+const btn_moveTabToBeginning = document.getElementById('btn_moveTabToBeginning');
 const options_link = document.getElementById('lnk_Options');
 const label_save = document.getElementById('lbl_sessionSaveStatus');
 // const btn_group = document.getElementById('btn_groupUngroupedTabs');
@@ -31,6 +38,11 @@ document.body.addEventListener('keyup', async (e) => {
         case 'l':
         case 'L':
             loadClickHandler();
+            break;
+        case 'm':
+        case 'M':
+            await relocateTabToBeginningOfTabGroup();
+            window.close();
             break;
     }
 });
@@ -82,6 +94,9 @@ function loadClickHandler() {
 }
 
 btn_loadSession.addEventListener('click', loadClickHandler);
+btn_moveTabToBeginning.addEventListener('click', async () => {
+    await relocateTabToBeginningOfTabGroup();
+});
 
 function goToOptions() {
     goToOptionsPage();
