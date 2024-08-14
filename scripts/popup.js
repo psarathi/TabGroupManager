@@ -1,4 +1,5 @@
 import {
+    closeTabsToRightOfCurrentTab,
     expandCollapseTabGroups,
     goToOptionsPage,
     loadSession,
@@ -42,6 +43,11 @@ document.body.addEventListener('keyup', async (e) => {
         case 'm':
         case 'M':
             await relocateTabToBeginningOfTabGroup();
+            window.close();
+            break;
+        case 'x':
+        case 'X':
+            await closeTabsToRightOfCurrentTab();
             window.close();
             break;
     }

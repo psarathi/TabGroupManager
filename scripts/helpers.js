@@ -194,3 +194,13 @@ export async function relocateTabToBeginningOfTabGroup() {
     await chrome.tabs.move(activeTab.id, {index: smallestIndexInTabGroup});
     await chrome.tabs.update(activeTab.id, {active: true});
 }
+
+export async function closeTabsToRightOfCurrentTab() {
+    let currentWindowTabs = await chrome.tabs.query({windowId: CURRENT_WINDOW});
+    if (!currentWindowTabs.length) {
+        return;
+    }
+    let activeTab = currentWindowTabs.find(t => t.active);
+    let tabIdsToBeClosed = currentWindowTabs.filter(t => t.groupId === activeTab.groupId && t.index > activeTab.index).map(t => t.id);
+    await chrome.tabs.remove(tabIdsToBeClosed);
+}
