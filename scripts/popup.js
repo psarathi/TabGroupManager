@@ -12,6 +12,7 @@ const btn_expand = document.getElementById('btn_expandAllTabs');
 const btn_saveSession = document.getElementById('btn_saveCurrentSession');
 const btn_loadSession = document.getElementById('btn_loadSession');
 const btn_moveTabToBeginning = document.getElementById('btn_moveTabToBeginning');
+const btn_closeTabsToRight = document.getElementById('btn_closeTabsToRight');
 const options_link = document.getElementById('lnk_Options');
 const label_save = document.getElementById('lbl_sessionSaveStatus');
 // const btn_group = document.getElementById('btn_groupUngroupedTabs');
@@ -102,6 +103,9 @@ function loadClickHandler() {
 btn_loadSession.addEventListener('click', loadClickHandler);
 btn_moveTabToBeginning.addEventListener('click', async () => {
     await relocateTabToBeginningOfTabGroup();
+});
+btn_closeTabsToRight.addEventListener('click', async () => {
+    await closeTabsToRightOfCurrentTab();
 });
 
 function goToOptions() {
