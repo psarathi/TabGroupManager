@@ -1,5 +1,6 @@
 import {
     closeTabsToRightOfCurrentTab,
+    duplicateActiveTab,
     expandCollapseTabGroups,
     goToOptionsPage,
     loadSession,
@@ -49,6 +50,11 @@ document.body.addEventListener('keyup', async (e) => {
         case 'x':
         case 'X':
             await closeTabsToRightOfCurrentTab();
+            window.close();
+            break;
+        case 'd':
+        case 'D':
+            await duplicateActiveTab();
             window.close();
             break;
     }

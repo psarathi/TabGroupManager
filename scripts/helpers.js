@@ -183,12 +183,13 @@ export function goToOptionsPage() {
     chrome.runtime.openOptionsPage();
 }
 
+async function getCurrentActiveTab(currentWindowTabs = []) {
+    currentWindowTabs = currentWindowTabs?.length ? currentWindowTabs : await chrome.tabs.query({windowId: CURRENT_WINDOW});
+    return [currentWindowTabs.find(t => t.active), currentWindowTabs];
+}
+
 export async function relocateTabToBeginningOfTabGroup() {
-    let currentWindowTabs = await chrome.tabs.query({windowId: CURRENT_WINDOW});
-    if (!currentWindowTabs.length) {
-        return;
-    }
-    let activeTab = currentWindowTabs.find(t => t.active);
+    let [activeTab, currentWindowTabs] = await getCurrentActiveTab();
     // This works because the tabs are returned in sorted order of index
     let smallestIndexInTabGroup = currentWindowTabs.filter(t => t.groupId === activeTab.groupId).map(t => t.index)[0];
     await chrome.tabs.move(activeTab.id, {index: smallestIndexInTabGroup});
@@ -196,11 +197,12 @@ export async function relocateTabToBeginningOfTabGroup() {
 }
 
 export async function closeTabsToRightOfCurrentTab() {
-    let currentWindowTabs = await chrome.tabs.query({windowId: CURRENT_WINDOW});
-    if (!currentWindowTabs.length) {
-        return;
-    }
-    let activeTab = currentWindowTabs.find(t => t.active);
+    let [activeTab, currentWindowTabs] = await getCurrentActiveTab();
     let tabIdsToBeClosed = currentWindowTabs.filter(t => t.groupId === activeTab.groupId && t.index > activeTab.index).map(t => t.id);
     await chrome.tabs.remove(tabIdsToBeClosed);
+}
+
+export async function duplicateActiveTab() {
+    let [activeTab] = await getCurrentActiveTab();
+    await chrome.tabs.duplicate(activeTab.id);
 }
