@@ -206,3 +206,11 @@ export async function duplicateActiveTab() {
     let [activeTab] = await getCurrentActiveTab();
     await chrome.tabs.duplicate(activeTab.id);
 }
+
+export async function muteUnmuteAllTabs(mute = true) {
+    const tabs = await chrome.tabs.query({windowId: CURRENT_WINDOW});
+    const updatePromises = tabs.map(tab =>
+        chrome.tabs.update(tab.id, {muted: mute})
+    );
+    await Promise.all(updatePromises);
+}

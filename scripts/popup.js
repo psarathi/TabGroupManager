@@ -4,6 +4,7 @@ import {
     expandCollapseTabGroups,
     goToOptionsPage,
     loadSession,
+    muteUnmuteAllTabs,
     relocateTabToBeginningOfTabGroup,
     saveSession
 } from './helpers.js';
@@ -14,6 +15,8 @@ const btn_saveSession = document.getElementById('btn_saveCurrentSession');
 const btn_loadSession = document.getElementById('btn_loadSession');
 const btn_moveTabToBeginning = document.getElementById('btn_moveTabToBeginning');
 const btn_closeTabsToRight = document.getElementById('btn_closeTabsToRight');
+const btn_muteAllTabs = document.getElementById('btn_muteAllTabs');
+const btn_unmuteAllTabs = document.getElementById('btn_unmuteAllTabs');
 const options_link = document.getElementById('lnk_Options');
 const label_save = document.getElementById('lbl_sessionSaveStatus');
 // const btn_group = document.getElementById('btn_groupUngroupedTabs');
@@ -55,6 +58,16 @@ document.body.addEventListener('keyup', async (e) => {
         case 'd':
         case 'D':
             await duplicateActiveTab();
+            window.close();
+            break;
+        case 'u':
+        case 'U':
+            await muteUnmuteAllTabs(true);
+            window.close();
+            break;
+        case 'n':
+        case 'N':
+            await muteUnmuteAllTabs(false);
             window.close();
             break;
     }
@@ -112,6 +125,12 @@ btn_moveTabToBeginning.addEventListener('click', async () => {
 });
 btn_closeTabsToRight.addEventListener('click', async () => {
     await closeTabsToRightOfCurrentTab();
+});
+btn_muteAllTabs.addEventListener('click', async () => {
+    await muteUnmuteAllTabs(true);
+});
+btn_unmuteAllTabs.addEventListener('click', async () => {
+    await muteUnmuteAllTabs(false);
 });
 
 function goToOptions() {
