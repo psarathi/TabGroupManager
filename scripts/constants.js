@@ -54,7 +54,7 @@ export const TAB_RULES = {
     {
       name: 'Meliora',
       url: ['*://*.meliora.ancestryl2.int/*', '*://*.meliora.ancestryl3.int/*', '*://*.meliora.ancestry.int/*'],
-      color: 'purple'
+      color: 'yellow'
     }
   ],
   [TAB_RULE_TYPE.Remove]: [] // list of URL rules for tabs that need to be removed
