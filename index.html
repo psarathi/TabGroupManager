@@ -8,23 +8,59 @@
 </head>
 <body>
 <div id="container">
-    <h2>Welcome to Tab Group Manager</h2>
-    <button id="btn_collapseTabs"><span class="start">&#10095;</span> <span class="end">&#10094;</span> Collapse all Tab
-        Groups
-    </button>
-    <button id="btn_expandAllTabs"><span class="end">&#10094;</span> <span class="start">&#10095;</span> Expand all Tab
-        Groups
-    </button>
-    <button id="btn_saveCurrentSession"><span class="down">&#8681;</span> Save current session</button>
-    <button id="btn_loadSession"><span class="up">&#8679;</span> Load/Import session</button>
-    <button id="btn_moveTabToBeginning"><span class="left">&#8678;</span> Move tab to beginning of group</button>
-    <button id="btn_closeTabsToRight"><span>X &#8680;</span> Close tabs to the right in the group</button>
-    <button id="btn_muteAllTabs"><span class="mute">&#128263;</span> Mute all tabs</button>
-    <button id="btn_unmuteAllTabs"><span class="unmute">&#128266;</span> Unmute all tabs</button>
+    <div class="header">
+        <h2>Tab Group Manager</h2>
+        <div id="lnk_Options"><span class="gear">⚙️</span></div>
+    </div>
+    
+    <div class="button-group">
+        <div class="button-group-title">Tab Groups</div>
+        <button id="btn_collapseTabs">
+            <span>📁</span> Collapse All Groups
+        </button>
+        <button id="btn_expandAllTabs">
+            <span>📂</span> Expand All Groups
+        </button>
+        <button id="btn_moveTabToBeginning">
+            <span>⬅️</span> Move Tab to Beginning
+        </button>
+        <button id="btn_closeTabsToRight" class="danger-action">
+            <span>✖️</span> Close Tabs to Right
+        </button>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="button-group">
+        <div class="button-group-title">Sessions</div>
+        <button id="btn_saveCurrentSession" class="primary-action">
+            <span>💾</span> Save Current Session
+        </button>
+        <button id="btn_loadSession" class="secondary-action">
+            <span>📥</span> Load Full Session
+        </button>
+        <button id="btn_selectiveRestore" class="secondary-action">
+            <span>🎯</span> Selective Restore
+        </button>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="button-group">
+        <div class="button-group-title">Audio</div>
+        <button id="btn_muteAllTabs">
+            <span>🔇</span> Mute All Tabs
+        </button>
+        <button id="btn_unmuteAllTabs">
+            <span>🔊</span> Unmute All Tabs
+        </button>
+    </div>
+    
+    <div class="keyboard-hint">
+        Press <kbd>C</kbd> to collapse, <kbd>S</kbd> to save, <kbd>R</kbd> for selective restore
+    </div>
+    
     <label id="lbl_sessionSaveStatus"></label>
-    <!--    <button id="btn_addEditRules">Add/Edit Tab Group Rules</button>-->
-    <!--    <label id="lbl_tabGroupName"></label>-->
-    <div id="lnk_Options"><span class="gear">&#9881;</span></div>
 </div>
 <script src="scripts/popup.js" type="module"></script>
 </body>

@@ -1,148 +1,246 @@
+/* Modern UI Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #96E9C6;
-    border-radius: 1em;
-    width: 20rem;
+    background-color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    width: 320px;
+    min-width: 320px;
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
 }
 
-div#lnk_Options {
-    color: #ED7B7B;
-    cursor: pointer;
-    font-size: xx-large;
-    text-align: right;
-}
-
+/* Container */
 div#container {
     display: flex;
     flex-direction: column;
-    margin: 0 0.25em;
-    row-gap: 1em;
+    padding: 0;
+    min-height: 400px;
 }
 
-div#container button {
-    background-color: #6962AD;
-    border: solid 1px gray;
-    border-radius: 0.5em;
-    color: aliceblue;
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 0.5em;
-    padding: 0.75em 0;
+/* Header */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    position: relative;
 }
 
 div#container h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+/* Settings Icon */
+div#lnk_Options {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: white;
+    cursor: pointer;
+    font-size: 24px;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+div#lnk_Options:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Button Groups */
+.button-group {
+    padding: 12px 15px;
+}
+
+.button-group-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #7f8c8d;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+/* Modern Button Styles */
+div#container button {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    color: #2c3e50;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 6px;
+    padding: 10px 14px;
+    text-align: left;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+div#container button:hover {
+    background-color: #f8f9fa;
+    border-color: #667eea;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+div#container button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.15);
+}
+
+/* Button Icons */
+div#container button span:first-child {
+    font-size: 16px;
+    margin-right: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Primary Action Buttons */
+.primary-action {
+    background-color: #667eea !important;
+    color: white !important;
+    border-color: #667eea !important;
+}
+
+.primary-action:hover {
+    background-color: #5a67d8 !important;
+    border-color: #5a67d8 !important;
+}
+
+/* Secondary Action Buttons */
+.secondary-action {
+    background-color: #48bb78 !important;
+    color: white !important;
+    border-color: #48bb78 !important;
+}
+
+.secondary-action:hover {
+    background-color: #38a169 !important;
+    border-color: #38a169 !important;
+}
+
+/* Danger Action Buttons */
+.danger-action {
+    background-color: #f56565 !important;
+    color: white !important;
+    border-color: #f56565 !important;
+}
+
+.danger-action:hover {
+    background-color: #e53e3e !important;
+    border-color: #e53e3e !important;
+}
+
+/* Status Label */
+#lbl_sessionSaveStatus {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #48bb78;
+    color: white;
     text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
 }
 
-span.start {
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-name: collapse_in;
-    display: inline-block;
-    margin: 0 0.1em;
+#lbl_sessionSaveStatus:not(:empty) {
+    transform: translateY(0);
 }
 
-span.end {
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-name: collapse_out;
-    display: inline-block;
-    margin: 0 0.1em 0.1em;
+/* Keyboard Shortcuts Hint */
+.keyboard-hint {
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    font-size: 11px;
+    color: #7f8c8d;
+    text-align: center;
+    margin-top: auto;
 }
 
-span.left {
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-name: collapse_out;
-    display: inline-block;
-    margin: 0 0.7em;
+.keyboard-hint kbd {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: monospace;
+    font-size: 11px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-span.down {
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-name: point_down;
-    display: inline-block;
+/* Remove old animations for cleaner look */
+span.start, span.end, span.left, span.down, span.up, span.mute, span.unmute {
+    animation: none;
+    display: inline-flex;
+    margin: 0;
 }
 
-span.up {
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-name: point_up;
-    display: inline-block;
+/* Subtle icon animations on hover */
+div#container button:hover span:first-child {
+    animation: subtle-bounce 0.3s ease;
 }
 
+@keyframes subtle-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-2px);
+    }
+}
+
+/* Settings gear animation */
 span.gear {
-    animation-duration: 7s;
-    animation-iteration-count: infinite;
-    animation-name: rotate_gear;
-    display: inline-block;
+    animation: none;
+    transition: transform 0.3s ease;
 }
 
-span.mute, span.unmute {
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-name: pulse;
-    display: inline-block;
-    margin: 0 0.3em;
-}
-
-@keyframes collapse_in {
-    from {
-        transform: translateX(10%);
-    }
-
-    to {
-        transform: translateX(80%);
-    }
-}
-
-@keyframes collapse_out {
-    from {
-        transform: translateX(80%);
-    }
-
-    to {
-        transform: translateX(10%);
-    }
-}
-
-@keyframes point_down {
-    from {
-        transform: translateY(10%);
-    }
-
-    to {
-        transform: translateY(30%);
-    }
-}
-
-@keyframes point_up {
-    from {
-        transform: translateY(30%);
-    }
-
-    to {
-        transform: translateY(10%);
-    }
+div#lnk_Options:hover span.gear {
+    animation: rotate_gear 2s linear infinite;
 }
 
 @keyframes rotate_gear {
-    0% {
-        transform: rotate(0);
+    from {
+        transform: rotate(0deg);
     }
-    100% {
+    to {
         transform: rotate(360deg);
     }
 }
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
+/* Divider */
+.divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 8px 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+    body {
+        width: 100%;
     }
 }

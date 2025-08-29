@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Group Manager - UI Preview</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f7;
+            padding: 40px;
+            margin: 0;
+        }
+        .preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .preview-section {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .preview-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .preview-content {
+            padding: 20px;
+        }
+        iframe {
+            width: 100%;
+            border: none;
+            display: block;
+        }
+        .side-by-side {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 40px;
+        }
+        .description {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .description h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .description ul {
+            color: #5a6c7d;
+            line-height: 1.8;
+        }
+        .feature-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h1 style="text-align: center; color: #2c3e50; margin-bottom: 40px;">Tab Group Manager - Modern UI Preview</h1>
+        
+        <div class="description">
+            <h3>🎨 Modern UI Features</h3>
+            <ul>
+                <li><span class="feature-badge">New</span>Clean, modern design with gradient header</li>
+                <li><span class="feature-badge">New</span>Organized button groups with section titles</li>
+                <li><span class="feature-badge">New</span>Color-coded action buttons (primary, secondary, danger)</li>
+                <li><span class="feature-badge">New</span>Smooth hover animations and transitions</li>
+                <li><span class="feature-badge">New</span>Keyboard shortcuts hint at the bottom</li>
+                <li><span class="feature-badge">New</span>Emoji icons for better visual recognition</li>
+                <li><span class="feature-badge">Enhanced</span>Selective restore with current/new window options</li>
+            </ul>
+        </div>
+        
+        <div class="side-by-side">
+            <div class="preview-section">
+                <div class="preview-title">Popup Interface</div>
+                <iframe src="index.html" height="600"></iframe>
+            </div>
+            
+            <div class="preview-section">
+                <div class="preview-title">Selective Restore Interface</div>
+                <iframe src="selective-restore.html" height="600"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

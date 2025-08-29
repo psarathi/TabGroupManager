@@ -1,0 +1,134 @@
+{
+  "windows": [
+    {
+      "1": [
+        {
+          "group_1": {
+            "id": 1,
+            "title": "Work Projects",
+            "color": "blue",
+            "collapsed": false,
+            "tabs": [
+              {
+                "id": 101,
+                "title": "GitHub - Project Alpha",
+                "url": "https://github.com/company/project-alpha",
+                "pinned": false
+              },
+              {
+                "id": 102,
+                "title": "Jira - Sprint Board",
+                "url": "https://company.atlassian.net/jira/software/projects/ALPHA/boards/1",
+                "pinned": false
+              }
+            ]
+          }
+        },
+        {
+          "group_2": {
+            "id": 2,
+            "title": "Documentation",
+            "color": "green",
+            "collapsed": true,
+            "tabs": [
+              {
+                "id": 201,
+                "title": "API Documentation",
+                "url": "https://docs.company.com/api",
+                "pinned": false
+              },
+              {
+                "id": 202,
+                "title": "Developer Guide",
+                "url": "https://wiki.company.com/dev-guide",
+                "pinned": false
+              },
+              {
+                "id": 203,
+                "title": "Architecture Overview",
+                "url": "https://wiki.company.com/architecture",
+                "pinned": false
+              }
+            ]
+          }
+        },
+        {
+          "tab_301": {
+            "id": 301,
+            "title": "Google",
+            "url": "https://www.google.com",
+            "pinned": true,
+            "groupId": -1
+          }
+        },
+        {
+          "tab_302": {
+            "id": 302,
+            "title": "Stack Overflow",
+            "url": "https://stackoverflow.com",
+            "pinned": false,
+            "groupId": -1
+          }
+        }
+      ]
+    },
+    {
+      "2": [
+        {
+          "group_3": {
+            "id": 3,
+            "title": "Research",
+            "color": "purple",
+            "collapsed": false,
+            "tabs": [
+              {
+                "id": 401,
+                "title": "Machine Learning Article",
+                "url": "https://arxiv.org/abs/2023.12345",
+                "pinned": false
+              },
+              {
+                "id": 402,
+                "title": "Tech Blog - Best Practices",
+                "url": "https://techblog.com/best-practices",
+                "pinned": false
+              }
+            ]
+          }
+        },
+        {
+          "group_4": {
+            "id": 4,
+            "title": "Personal",
+            "color": "yellow",
+            "collapsed": false,
+            "tabs": [
+              {
+                "id": 501,
+                "title": "Gmail",
+                "url": "https://mail.google.com",
+                "pinned": false
+              },
+              {
+                "id": 502,
+                "title": "Calendar",
+                "url": "https://calendar.google.com",
+                "pinned": false
+              },
+              {
+                "id": 503,
+                "title": "YouTube",
+                "url": "https://www.youtube.com",
+                "pinned": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "extension": {
+    "name": "Tab Group Manager",
+    "version": "1.0"
+  }
+}

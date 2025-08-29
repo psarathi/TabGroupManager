@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Selective Session Restore - Tab Group Manager</title>
+    <link href="styles/selective-restore.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+    <div class="header">
+        <h2>Selective Session Restore</h2>
+    </div>
+    
+    <div id="file-selection">
+        <button id="btn_selectFile" class="primary-button">
+            <span class="icon">📁</span> Select Session File
+        </button>
+        <span id="selected-file-name"></span>
+    </div>
+    
+    <div id="session-content" style="display: none;">
+        <div class="controls">
+            <button id="btn_selectAll" class="control-button">Select All</button>
+            <button id="btn_deselectAll" class="control-button">Deselect All</button>
+            <div class="restore-options">
+                <label class="radio-option">
+                    <input type="radio" name="restoreLocation" value="new" checked>
+                    <span>Restore in new window(s)</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="restoreLocation" value="current">
+                    <span>Restore in current window</span>
+                </label>
+            </div>
+            <button id="btn_restore" class="primary-button" disabled>
+                <span class="icon">↻</span> Restore Selected
+            </button>
+        </div>
+        
+        <div id="windows-container">
+            <!-- Windows and tab groups will be dynamically inserted here -->
+        </div>
+    </div>
+    
+    <div id="status-message"></div>
+    
+    <div class="footer">
+        <a href="index.html" id="back-to-popup">← Back to Main Menu</a>
+    </div>
+</div>
+
+<script src="scripts/selective-restore.js" type="module"></script>
+</body>
+</html>

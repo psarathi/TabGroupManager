@@ -13,6 +13,7 @@ const btn_collapse = document.getElementById('btn_collapseTabs');
 const btn_expand = document.getElementById('btn_expandAllTabs');
 const btn_saveSession = document.getElementById('btn_saveCurrentSession');
 const btn_loadSession = document.getElementById('btn_loadSession');
+const btn_selectiveRestore = document.getElementById('btn_selectiveRestore');
 const btn_moveTabToBeginning = document.getElementById('btn_moveTabToBeginning');
 const btn_closeTabsToRight = document.getElementById('btn_closeTabsToRight');
 const btn_muteAllTabs = document.getElementById('btn_muteAllTabs');
@@ -44,6 +45,11 @@ document.body.addEventListener('keyup', async (e) => {
         case 'l':
         case 'L':
             loadClickHandler();
+            break;
+        case 'r':
+        case 'R':
+            chrome.tabs.create({ url: chrome.runtime.getURL('selective-restore.html') });
+            window.close();
             break;
         case 'm':
         case 'M':
@@ -120,6 +126,10 @@ function loadClickHandler() {
 }
 
 btn_loadSession.addEventListener('click', loadClickHandler);
+btn_selectiveRestore.addEventListener('click', () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('selective-restore.html') });
+    window.close();
+});
 btn_moveTabToBeginning.addEventListener('click', async () => {
     await relocateTabToBeginningOfTabGroup();
 });
