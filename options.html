@@ -1,43 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Tab Group Manager Settings</title>
     <link href="styles/options.css" rel="stylesheet"/>
 </head>
 <body>
 <div id="container">
-    <label for="default_tab_color">
-        Select the color of the default tab group
-        <select id="default_tab_color">
-            <option value="grey">grey</option>
-            <option selected value="red">red</option>
-            <option value="green">green</option>
-            <option value="blue">blue</option>
-            <option value="yellow">yellow</option>
-            <option value="pink">pink</option>
-            <option value="purple">purple</option>
-            <option value="cyan">cyan</option>
-            <option value="orange">orange</option>
-        </select>
-    </label>
-    <label for="opt_group_on_launch">
-        <input checked id="opt_group_on_launch" type="checkbox"/>
-        Periodically group ungrouped tabs
-    </label>
-    <label for="opt_periodically_save_sessions">
-        <input id="opt_periodically_save_sessions" type="checkbox"/>
-        Periodically save sessions (happens every 24 hours)
-    </label>
-    <label for="opt_overwrite_saved_sessions">
-        <input id="opt_overwrite_saved_sessions" type="checkbox"/>
-        Keep history of saved sessions
-    </label>
-    <label for="txt_defaultTabGroupName">
-        Tab name for grouping ungrouped tabs
-        <input id="txt_defaultTabGroupName" placeholder="Tab group name...(Misc is the default)" type="text">
-    </label>
-    <div id="status"></div>
-    <button id="save">Save</button>
+    <div class="header">
+        <h2>Tab Group Manager Settings</h2>
+    </div>
+    
+    <div class="settings-content">
+        <div class="settings-group">
+            <div class="settings-group-title">Default Tab Group</div>
+            
+            <div class="setting-item">
+                <label for="txt_defaultTabGroupName">
+                    <span class="setting-label">Default group name</span>
+                    <span class="setting-description">Name for automatically grouped tabs</span>
+                </label>
+                <input id="txt_defaultTabGroupName" 
+                       placeholder="Misc" 
+                       type="text" 
+                       class="text-input">
+            </div>
+            
+            <div class="setting-item">
+                <label for="default_tab_color">
+                    <span class="setting-label">Default group color</span>
+                    <span class="setting-description">Color for new tab groups</span>
+                </label>
+                <select id="default_tab_color" class="select-input">
+                    <option value="grey">Grey</option>
+                    <option selected value="red">Red</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="pink">Pink</option>
+                    <option value="purple">Purple</option>
+                    <option value="cyan">Cyan</option>
+                    <option value="orange">Orange</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="settings-group">
+            <div class="settings-group-title">Automation</div>
+            
+            <div class="setting-item checkbox-item">
+                <label for="opt_group_on_launch">
+                    <input checked id="opt_group_on_launch" type="checkbox" class="checkbox-input"/>
+                    <div class="checkbox-label">
+                        <span class="setting-label">Auto-group ungrouped tabs</span>
+                        <span class="setting-description">Periodically organize tabs into groups</span>
+                    </div>
+                </label>
+            </div>
+            
+            <div class="setting-item checkbox-item">
+                <label for="opt_periodically_save_sessions">
+                    <input id="opt_periodically_save_sessions" type="checkbox" class="checkbox-input"/>
+                    <div class="checkbox-label">
+                        <span class="setting-label">Auto-save sessions</span>
+                        <span class="setting-description">Automatically save sessions every 24 hours</span>
+                    </div>
+                </label>
+            </div>
+            
+            <div class="setting-item checkbox-item">
+                <label for="opt_overwrite_saved_sessions">
+                    <input id="opt_overwrite_saved_sessions" type="checkbox" class="checkbox-input"/>
+                    <div class="checkbox-label">
+                        <span class="setting-label">Preserve session history</span>
+                        <span class="setting-description">Save sessions with timestamps instead of overwriting</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        
+        <div class="save-section">
+            <div id="status"></div>
+            <button id="save" class="primary-button">
+                Save Settings
+            </button>
+        </div>
+    </div>
 </div>
 <script src="scripts/options.js" type="module"></script>
 </body>
